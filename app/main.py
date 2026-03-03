@@ -6,9 +6,7 @@ import tkinter as tk
 from PIL import Image, ImageTk
 import threading
 
-# ----------------------------
-# CONFIG
-# ----------------------------
+# config 
 SERIAL_PORT = "/dev/ttyUSB0"
 BAUD_RATE = 9600
 
