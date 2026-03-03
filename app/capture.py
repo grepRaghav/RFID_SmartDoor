@@ -4,6 +4,7 @@ import cv2
 from deepface import DeepFace
 
 from app import gui
+from app import database
 
 
 def handle_intruder():
@@ -58,6 +59,9 @@ def handle_intruder():
         gui.show_image(frame)
 
         gui.result_label.config(text=details)
+
+        # add the intruder record to the database
+        database.add_intruder_record(age, gender, emotion, filename)
 
     cap.release()
 
