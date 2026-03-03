@@ -1,7 +1,7 @@
 import serial
 
 # config constants
-SERIAL_PORT = "/dev/ttyUSB0"
+SERIAL_PORT = "/dev/ttyUSB1"
 BAUD_RATE = 9600
 
 # initialize serial connection
