@@ -1,6 +1,10 @@
+
 import tkinter as tk
+from tkinter import filedialog, messagebox
 from PIL import Image, ImageTk
 import cv2
+import csv
+from app import database
 
 # GUI setup
 root = tk.Tk()
@@ -72,3 +76,44 @@ def show_image(frame):
 
     image_label.imgtk = imgtk
     image_label.configure(image=imgtk)
+
+
+# --- Export to CSV functionality ---
+def export_db_to_csv():
+    records = database.get_all_intruders()
+    if not records:
+        messagebox.showinfo("Export", "No intruder records to export.")
+        return
+
+    # Ask user where to save the CSV
+    file_path = filedialog.asksaveasfilename(
+        defaultextension=".csv",
+        filetypes=[("CSV files", "*.csv")],
+        title="Save intruder records as CSV"
+    )
+    if not file_path:
+        return
+
+    # Write records to CSV
+    headers = ["id", "timestamp", "age", "gender", "emotion", "image_path", "created_at"]
+    try:
+        with open(file_path, mode="w", newline="") as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerow(headers)
+            for row in records:
+                writer.writerow(row)
+        messagebox.showinfo("Export", f"Exported {len(records)} records to {file_path}")
+    except Exception as e:
+        messagebox.showerror("Export Failed", f"Could not export CSV: {e}")
+
+
+# Add export button to GUI
+export_btn = tk.Button(
+    root,
+    text="Export Intruder Log to CSV",
+    font=("Helvetica", 12, "bold"),
+    bg="#444",
+    fg="white",
+    command=export_db_to_csv
+)
+export_btn.pack(pady=10)
