@@ -23,19 +23,6 @@ if base_dir not in sys.path:
 from app import gui
 from app import serial_listener
 from app import database
-    # initialize the database
-    database.init_db()
-
-    # start the background serial listening thread
-    serial_listener.start_thread()
-
-    # launch the GUI event loop
-    gui.root.mainloop()
-
-
-if __name__ == "__main__":
-    main()
-
 
 
 def main():
