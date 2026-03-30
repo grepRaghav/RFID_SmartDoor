@@ -8,7 +8,7 @@
 MFRC522 mfrc522(SS_PIN, RST_PIN);
 Servo doorServo;
 
-String authorizedUID = "F416B5a";   
+String authorizedUID = "BA74165";   
 
 void setup() {
   Serial.begin(9600);
@@ -21,7 +21,7 @@ void setup() {
   Serial.println("Scan RFID...");
 }
 
-void loop() {
+void loop() { 
 
   if (!mfrc522.PICC_IsNewCardPresent()) {
     return;

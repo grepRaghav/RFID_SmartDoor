@@ -5,8 +5,6 @@ from deepface import DeepFace
 
 from app import gui
 from app import database
-
-
 def handle_intruder():
     """Capture a frame, analyze it with DeepFace, overlay details, and update the GUI."""
 

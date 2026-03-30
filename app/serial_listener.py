@@ -1,4 +1,5 @@
 import threading
+import time
 
 from app import config
 from app import gui
@@ -11,16 +12,21 @@ def serial_listener():
         return
 
     while True:
-        if config.ser.in_waiting > 0:
-            message = config.ser.readline().decode().strip()
-            print("Arduino:", message)
+        try:
+            if config.ser.in_waiting > 0:
+                message = config.ser.readline().decode(errors="ignore").strip()
+                print("Arduino:", message)
 
-            if message == "VALID":
-                gui.set_valid()
-                gui.root.after(3000, gui.set_idle)
+                if message == "VALID":
+                    gui.set_valid()
+                    gui.root.after(3000, gui.set_idle)
 
-            elif message == "INVALID":
-                capture.handle_intruder()
+                elif message == "INVALID":
+                    capture.handle_intruder()
+
+        except Exception as e:
+            print("Serial error:", e)
+            time.sleep(1)   # prevent CPU spinning
 
 
 def start_thread():
