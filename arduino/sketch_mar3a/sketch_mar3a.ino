@@ -8,7 +8,8 @@
 MFRC522 mfrc522(SS_PIN, RST_PIN);
 Servo doorServo;
 
-String authorizedUID = "BA74165";   
+String authorizedUID = "F416B5";
+//"BA74165";   
 
 void setup() {
   Serial.begin(9600);
@@ -41,9 +42,15 @@ void loop() {
 
   if (content == authorizedUID) {
     Serial.println("VALID");
-    doorServo.write(90);   // Unlock
+    for(int pos = 0; pos <= 90; pos++) {
+        doorServo.write(pos);
+        delay(10);
+    }   // Unlock
     delay(3000);
-    doorServo.write(0);    // Lock again
+    for(int pos = 90; pos >= 0; pos--) {
+        doorServo.write(pos);
+        delay(10);
+    }    // Lock again
   }
   else {
     Serial.println("INVALID");
